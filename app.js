@@ -14,7 +14,7 @@ var express = require("express")
 , mongoose = require("mongoose")
 ;
 
-global.db = mongoose.connect("mongodb://localhost/ntalk");
+global.db = mongoose.connect("mongodb://localhost/SpendManager");
 
 
 

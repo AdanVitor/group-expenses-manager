@@ -9,15 +9,15 @@ module.exports = function(io) {
 		sockets.on("connection", function (client) {
 
 			var session = client.handshake.session
-			, usuario = session.usuario;
+			, user = session.user;
 
 
 			client.on("send-server", function (msg) {
 				var sala = session.sala
-				, data = {email: usuario.email, sala: sala};
-				msg = "<b>"+usuario.nome+":</b> "+msg+"<br>";
+				, data = {email: user.email, sala: sala};
+				msg = "<b>"+user.name+":</b> "+msg+"<br>";
 				client.broadcast.emit("new-message", data);
-				/*Essa função será importante para o projeto - o grupo nada mais é do que uma sala,
+				/*Essa função será importante para o projeto - o group nada mais é do que uma sala,
 				mas na qual o cliente não se desconecta quando sai da sala*/
 				sockets.in(sala).emit("send-client", msg);
 			});

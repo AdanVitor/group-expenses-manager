@@ -1,0 +1,71 @@
+<% include ../header %>
+<% include jquery_script %>
+<header>
+	<h2>Gerenciador de contas</h2>
+</header>
+<h4 id = "user">
+</h4>
+
+<section>
+<form action="/create_group" method="get">
+<button type="submit">Criar Grupo</button>
+</form>
+
+<table>
+	<thead>
+		<tr>
+			<th>Nome Grupo</th>
+			<th>Descrição</th>
+			<th>Ação</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% groups.forEach(function(group) { %>
+			<tr>
+			<td><%-	group.name %></td>
+			<td><%-	group.description %></td>
+			<td>
+				<a href="/contact/<%- contact._id %>">Detalhes</a>
+				<a href="/chat" id="chat_<%- contact.email %>">Conversar</a>	
+			</td>
+			</tr>
+		<% }) %>
+	</tbody>
+</table>
+
+<table>
+	<thead>
+		<tr>
+			<th>Nome</th>
+			<th>E-mail</th>
+			<th>Ação</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% contacts.forEach(function(contact) { %>
+			<tr>
+			<td><%-	contact.name %></td>
+			<td><%-	contact.email %></td>
+			<td>
+				<a href="/contact/<%- contact._id %>">Detalhes</a>
+				<a href="/chat" id="chat_<%- contact.email %>">Conversar</a>	
+			</td>
+			</tr>
+		<% }) %>
+	</tbody>
+</table>
+</section>
+<script>
+	$(function() {
+          start();    
+    });
+	function start(){
+		var user = document.getElementById("user");
+		user.textContent = "Bem vindo: " + "<%- user.name %>" + " - " + "<%- user.email %>";
+	}
+</script>
+
+
+
+<% include ../exit %>
+<% include ../footer %>

@@ -1,0 +1,43 @@
+<% include ../header %>
+<% include jquery_script %>
+<header>
+	<h2>Gerenciador de contas</h2>
+</header>
+<h4 id = "user">
+</h4>
+
+<link href="stylesheets/css/bootstrap.css" rel="stylesheet">
+
+<form id = "principalForm" action="/save_group" method="post">
+	<input type="text" name="group[name]" placeholder="Nome do grupo">
+	<input type="text" name="group[description]" placeholder="Descricao">
+<button id = "saveButton">Salvar</button>
+</form>
+
+
+<!-- <div id="test">
+	
+</div> -->
+
+<!-- 
+<script>
+	$.ajax({
+		type: "GET",
+		url: "/test",
+		//data: { name: "John", location: "Boston" },
+		dataType: "json"
+	}).done(function (msg) {
+		var test = "";
+		for(var x in msg) {
+			test += msg[x].name + ": " + msg[x].email + "<br/>"
+		}
+		document.getElementById("test").innerHTML = (test);
+
+	}).fail(function( jqXHR, textStatus ) {
+  		alert( "Request failed: " + textStatus );
+	});
+</script>
+ -->
+
+<% include ../exit %>
+<% include ../footer %>
