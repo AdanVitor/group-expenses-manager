@@ -3,24 +3,19 @@ module.exports = function(app) {
 	var Group = app.models.group;
 	var GroupsController = {
 		index: function(req, res) {
-			var _id = req.session.user._id; /*Lembrando que o usuário, recuperado do banco de dados, agora tem um id*/
+			var _id = req.session.user._id; 
+			console.log(typeof _id);
 			User.findById(_id, function(erro, user) {
 				var contacts =  user.contacts;
 				var groupIDs = user.groupIDs;
 				console.log(groupIDs);
-				var groups = [];
-				for(var i = 0 ; i < groupIDs.length; i++){
-					Group.findById(groupIDs[i],function(erro,group){
-						if(group){
-							groups.push(group);
-						}
-					});
-				}
-				console.log("grupos");
-				console.log(groups);
-				var resultado = { contacts: contacts , user: req.session.user, groups: groups};
-				/*render - retorna um html - */
-				res.render("groups/index", resultado);
+				// acha todos os elementos em 'groupIDs' e retorna um array
+				Group.find( { '_id': { $in: groupIDs} }, function(erro, matching_groups){
+					console.log("grupos");
+					console.log(matching_groups);
+					var resultado = { contacts: contacts , user: req.session.user, groups: matching_groups};
+					res.render("groups/index", resultado);
+				});
 			});
 		},
 		create_group: function(req, res) {

@@ -1,19 +1,19 @@
 
 const KEY = "ntalk.sid" , SECRET = "ntalk";
-var express = require("express")
-, load = require("express-load")
-, bodyParser = require("body-parser")
-, cookieParser = require("cookie-parser")
-, expressSession = require("express-session")
-, methodOverride = require("method-override")
-, app = express()
-, server = require("http").Server(app)
-, io = require('socket.io')(server)
-, cookie = cookieParser(SECRET)
-, store = new expressSession.MemoryStore()
-, mongoose = require("mongoose")
-;
+var express = require("express"), 
+	load = require("express-load"), 
+	bodyParser = require("body-parser"), 
+	cookieParser = require("cookie-parser"), 
+	expressSession = require("express-session"), 
+	methodOverride = require("method-override"), 
+	app = express(), 
+	server = require("http").Server(app), 
+	io = require('socket.io')(server), 
+	cookie = cookieParser(SECRET), 
+	store = new expressSession.MemoryStore(), 
+	mongoose = require("mongoose");
 
+	
 global.db = mongoose.connect("mongodb://localhost/SpendManager");
 
 

@@ -7,6 +7,8 @@ module.exports = function(app) {
 		login: function(req, res) {
 			var query = {email: req.body.user.email};
 			User.findOne(query).select("name email").exec(function(erro, user){
+				console.log(user);
+				console.log(typeof user._id);
 				if (user) {
 					req.session.user = user; 
 					res.redirect("/groups");
