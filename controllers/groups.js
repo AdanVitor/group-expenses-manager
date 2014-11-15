@@ -73,6 +73,13 @@ module.exports = function(app) {
                 console.log("edit_group: new group is " + group);
                 res.redirect("/groups");
             });
+        },
+        add_member: function  (req,res) {
+        	var id = req.params.id;
+        	Group.findById(id, function(error, group) {
+                console.log("addMember: the group is " + group);
+                res.render("groups/add_member", {group: group});
+            });
         }
 	};
 	return GroupsController;

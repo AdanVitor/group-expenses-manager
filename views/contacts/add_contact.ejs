@@ -1,0 +1,42 @@
+<% include ../header %>
+<header>
+    <h2>Adicionar contato</h2>
+</header>
+
+<section>
+    <form action="/create_group" method="get">
+        <button type="submit">Criar Grupo</button>
+    </form>
+     <form action="/show_contact" method="get">
+        <button type="submit">Adicionar Contato</button>
+    </form>
+
+    <br />
+    <br />
+    <hr>
+
+    <% if (possible_contacts.length != 0) { %>
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>Ação</th>
+            </tr>
+        </thead>
+        <tbody>
+        <% possible_contacts.forEach(function(contact) { %>
+        <tr>
+            <td><%-	contact.name %></td>
+            <td><%-	contact.email %></td>
+        </tr>
+        <% }) %>
+        </tbody>
+    </table>
+    <% } else { %>
+		<h4>Nenhum contato</h4>
+    <% } %>
+</section>
+
+<% include ../exit %>
+<% include ../footer %>

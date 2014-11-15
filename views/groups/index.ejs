@@ -1,5 +1,4 @@
 <% include ../header %>
-<% include jquery_script %>
 <header>
     <h2>Gerenciador de contas</h2>
 </header>
@@ -10,10 +9,14 @@
     <form action="/create_group" method="get">
         <button type="submit">Criar Grupo</button>
     </form>
+     <form action="/show_contact" method="get">
+        <button type="submit">Adicionar Contato</button>
+    </form>
 
     <br />
     <br />
-
+    <hr>
+	
     <table>
         <thead>
             <tr>
@@ -27,10 +30,13 @@
             <td><%-	group.name %></td>
             <td><%-	group.description %></td>
             <td><a href="/edit_group/<%- group._id %>">Edit</a></td>
+            <td><a href="/add_group_member/<%- group._id %>"></a></td>
         </tr>
         <% }) %>
         </tbody>
     </table>
+
+    <hr>
 
     <br />
     <br />
@@ -57,6 +63,8 @@
         <% }) %>
         </tbody>
     </table>
+    <% } else { %>
+		<h4>Nenhum contato</h4>
     <% } %>
 </section>
 <script>
