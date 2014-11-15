@@ -4,17 +4,7 @@
 </header>
 
 <section>
-    <form action="/create_group" method="get">
-        <button type="submit">Criar Grupo</button>
-    </form>
-     <form action="/show_contact" method="get">
-        <button type="submit">Adicionar Contato</button>
-    </form>
-
-    <br />
-    <br />
     <hr>
-
     <% if (possible_contacts.length != 0) { %>
     <table>
         <thead>
@@ -29,6 +19,12 @@
         <tr>
             <td><%-	contact.name %></td>
             <td><%-	contact.email %></td>
+            <td>
+                <form action="/add_contact" method="post">
+                    <input type="hidden" value="<%- contact.id %>" name="contact[id]">
+                    <button type="submit">adicionar</button>
+                </form>
+            </td>    
         </tr>
         <% }) %>
         </tbody>
