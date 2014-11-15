@@ -7,7 +7,12 @@ no html-->
 			<h4>Bem-vindo!</h4>
 		</header>
 		<section>
-            <h1 id="fb-welcome"></h1>
+		<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+</fb:login-button>
+
+<div id="status">
+</div>
+            
 			<form action="/entrar" method="post">
 				<input type="text" name="user[name]" placeholder="Nome">
 				<br>

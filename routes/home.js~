@@ -1,0 +1,19 @@
+module.exports = function(app) {
+	/*Por causa  do express-loader o app tem um subobjeto chamado controllers*/
+	var home = app.controllers.home;
+	app.get("/", home.index);
+	app.post("/entrar", home.login);
+	app.get("/sair", home.logout);
+app.get('/auth/facebook', passport.authenticate('facebook-canvas'));
+app.get('/auth/facebook/callback', passport.authenticate('facebook-canvas', { successRedirect: '/',failureRedirect: '/error' }));
+app.post('/auth/facebook/canvas',  passport.authenticate('facebook-canvas', { successRedirect: '/', failureRedirect: '/auth/facebook/canvas/autologin' }));
+	app.get('/auth/facebook/canvas/autologin', function( req, res ){
+  res.send( '<!DOCTYPE html>' +
+              '<body>' +
+                '<script type="text/javascript">' +
+                  'top.location.href = "/auth/facebook";' +
+                '</script>' +
+              '</body>' +
+            '</html>' );
+});
+};
