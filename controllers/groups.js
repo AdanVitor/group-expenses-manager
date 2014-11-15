@@ -76,13 +76,38 @@ module.exports = function(app) {
                 res.redirect("/groups");
             });
         },
-        add_member: function  (req,res) {
-        	var id = req.params.id;
-        	Group.findById(id, function(error, group) {
-                console.log("addMember: the group is " + group);
-                res.render("groups/add_member", {group: group});
-            });
+        add_group_member: function  (req,res) {
+        	var groupId = req.params.id;
+        	var id = req.session.user._id;
+			User.findById(id , function (erro,user){
+				if(user){
+					var contacts = user.contacts;
+					User.find({'_id': {$in: contacts} }, function (error,contactsList){
+						res.render("groups/add_member",{contacts: contactsList,
+							groupId: groupId});
+					});	
+				}
+			});
+        },
+        save_group_member: function  (req,res) {
+        	var groupID = req.body.group.id;
+        	var contactID = req.body.contact.id;
+			User.findById(contactID , function (erro,contact){
+				if(contact){
+					var groupIDs = contact.groupIDs;
+					groupIDs.push(contactID);
+					Group.findById(groupID , function (erro,group){
+						if(group){
+							var userIDs = group.userIDs;
+							userIDs.push(contactID);
+							group.save();
+							res.redirect("/groups");
+						}
+					});
+				}
+			});
         }
+
 	};
 	return GroupsController;
 };

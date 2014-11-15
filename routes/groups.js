@@ -8,5 +8,6 @@ module.exports = function(app) {
     app.get("/test", autenticar, groups.get_group);
     app.get("/edit_group/:id", autenticar, groups.edit_group);
     app.post("/edit_group/:id", autenticar, groups.save_edit_group);
-    
+    app.get("/add_group_member/:id", autenticar, groups.add_group_member);
+    app.post("/add_group_member", autenticar, groups.save_group_member);
 };

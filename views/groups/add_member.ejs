@@ -1,41 +1,39 @@
 <% include ../header %>
-<% include jquery_script %>
 <header>
-    <h2>Adicionar membro</h2>
+    <h2>Adicionar contato</h2>
 </header>
-<h4 id = "user">
-</h4>
 
-<form id = "principalForm" action="/save_group" method="post">
-    <input type="text" name="group[name]" placeholder="Nome do grupo">
-    <input type="text" name="group[description]" placeholder="Descricao">
-<button id = "saveButton">Salvar</button>
-</form>
-
-
-<!-- <div id="test">
-    
-</div> -->
-
-<!-- 
-<script>
-    $.ajax({
-        type: "GET",
-        url: "/test",
-        //data: { name: "John", location: "Boston" },
-        dataType: "json"
-    }).done(function (msg) {
-        var test = "";
-        for(var x in msg) {
-            test += msg[x].name + ": " + msg[x].email + "<br/>"
-        }
-        document.getElementById("test").innerHTML = (test);
-
-    }).fail(function( jqXHR, textStatus ) {
-        alert( "Request failed: " + textStatus );
-    });
-</script>
- -->
+<section>
+    <hr>
+    <% if (contacts.length != 0) { %>
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>Ação</th>
+            </tr>
+        </thead>
+        <tbody>
+        <% contacts.forEach(function(contact) { %>
+        <tr>
+            <td><%- contact.name %></td>
+            <td><%- contact.email %></td>
+            <td>
+                <form action="/add_group_member" method="post">
+                    <input type="hidden" value="<%- contact.id %>" name="contact[id]">
+                    <input type="hidden" value="<%- groupId %>" name="group[id]">
+                    <button type="submit">adicionar</button>
+                </form>
+            </td>    
+        </tr>
+        <% }) %>
+        </tbody>
+    </table>
+    <% } else { %>
+        <h4>Nenhum contato</h4>
+    <% } %>
+</section>
 
 <% include ../exit %>
 <% include ../footer %>
