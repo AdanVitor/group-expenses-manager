@@ -82,10 +82,27 @@ module.exports = function(app) {
 			User.findById(id , function (erro,user){
 				if(user){
 					var contacts = user.contacts;
-					User.find({'_id': {$in: contacts} }, function (error,contactsList){
-						res.render("groups/add_member",{contacts: contactsList,
-							groupId: groupId});
-					});	
+					var possibleMembers = [];
+					Group.findById(groupId , function (error, group){
+						var userIDs = group.userIDs;
+						for (var i = 0 ; i < contacts.length;i++){
+							var found = false;
+							for(var j = 0 ; j < userIDs.length;j++){
+								if(userIDs[j]==contacts[i]){
+									found = true;
+									break;
+								}
+							}
+							if(!found){
+								possibleMembers.push(contacts[i]);
+							}
+						}
+						User.find({'_id': {$in: possibleMembers} }, function (error,contactsList){
+							res.render("groups/add_member",{contacts: contactsList,
+								groupId: groupId});
+						});	
+
+					});
 				}
 			});
         },
@@ -96,6 +113,7 @@ module.exports = function(app) {
 				if(contact){
 					var groupIDs = contact.groupIDs;
 					groupIDs.push(contactID);
+					contact.save();
 					Group.findById(groupID , function (erro,group){
 						if(group){
 							var userIDs = group.userIDs;
