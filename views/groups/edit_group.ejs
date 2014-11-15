@@ -11,8 +11,32 @@
 <form id = "principalForm" action="/edit_group/<%- group.id %>" method="post">
     <input type="text" name="group[name]" value="<%- group.name %>">
     <input type="text" name="group[description]" value="<%- group.description %>">
-<button id = "saveButton">Salvar</button>
+    <button id = "saveButton">Salvar</button>
 </form>
+
+<hr>
+<h2>Membros do grupo</h2>
+<% if (members.length != 0) { %>
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>Ação</th>
+            </tr>
+        </thead>
+        <tbody>
+        <% members.forEach(function(member) { %>
+        <tr>
+            <td><%- member.name %></td>
+            <td><%- member.email %></td>
+        </tr>
+        <% }) %>
+        </tbody>
+    </table>
+<% } else { %>
+    <h4>Nenhum membro</h4>
+<% } %>
 
 
 <!-- <div id="test">

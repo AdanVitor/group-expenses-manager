@@ -3,20 +3,23 @@ module.exports = function(app) {
 	var Group = app.models.group;
 	var GroupsController = {
 		index: function(req, res) {
-			var _id = req.session.user._id; 
-			console.log(typeof _id);
-			User.findById(_id, function(erro, user) {
+			var userID = req.session.user._id; 
+			console.log(typeof userID);
+			User.findById(userID, function(erro, user) {
 				var contacts =  user.contacts;
 				var groupIDs = user.groupIDs;
+				console.log("groupsIDs\n");
 				console.log(groupIDs);
 				// acha todos os elementos em 'groupIDs' e retorna um array
-				Group.find( { '_id': { $in: groupIDs} }, function(erro, matching_groups){
-					console.log("grupos");
-					console.log(matching_groups);
-					User.find({ '_id': { $in: contacts} },function  (erro,contactsList) {
-						var resultado = { contacts: contactsList , user: req.session.user, groups: matching_groups};
-						res.render("groups/index", resultado);
-					})
+				Group.find({'_id': { $in: groupIDs} }, function(erro, matching_groups){
+					if(matching_groups){
+						console.log("grupos");
+						console.log(matching_groups);
+						User.find({ '_id': { $in: contacts} },function  (erro,contactsList) {
+							var resultado = { contacts: contactsList , user: req.session.user, groups: matching_groups};
+							res.render("groups/index", resultado);
+						});
+					}
 				});
 			});
 		},
@@ -61,7 +64,10 @@ module.exports = function(app) {
             var id = req.params.id;
             Group.findById(id, function(error, group) {
                 console.log("edit_group: the group is " + group);
-                res.render("groups/edit_group", {group: group});
+                var userIDs = group.userIDs;
+                User.find( { '_id': { $in: userIDs} }, function(erro, members){
+                	res.render("groups/edit_group", {group: group, members:members});
+                });	
             });
         },
         save_edit_group: function (req, res) {
@@ -112,7 +118,7 @@ module.exports = function(app) {
 			User.findById(contactID , function (erro,contact){
 				if(contact){
 					var groupIDs = contact.groupIDs;
-					groupIDs.push(contactID);
+					groupIDs.push(groupID);
 					contact.save();
 					Group.findById(groupID , function (erro,group){
 						if(group){

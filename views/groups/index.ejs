@@ -22,6 +22,7 @@
             <tr>
                 <th>Nome do grupo</th>
                 <th>Descrição</th>
+                <th>Ação</th>
             </tr>
         </thead>
         <tbody>
@@ -31,6 +32,7 @@
             <td><%-	group.description %></td>
             <td><a href="/edit_group/<%- group._id %>">Edit</a></td>
             <td><a href="/add_group_member/<%- group._id %>">Adicionar membro</a></td>
+
         </tr>
         <% }) %>
         </tbody>
