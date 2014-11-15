@@ -13,8 +13,10 @@ module.exports = function(app) {
 				Group.find( { '_id': { $in: groupIDs} }, function(erro, matching_groups){
 					console.log("grupos");
 					console.log(matching_groups);
-					var resultado = { contacts: contacts , user: req.session.user, groups: matching_groups};
-					res.render("groups/index", resultado);
+					User.find({ '_id': { $in: contacts} },function  (erro,contactsList) {
+						var resultado = { contacts: contactsList , user: req.session.user, groups: matching_groups};
+						res.render("groups/index", resultado);
+					})
 				});
 			});
 		},
