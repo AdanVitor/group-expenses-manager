@@ -5,4 +5,6 @@ module.exports = function(app) {
 	app.get("/create_group",autenticar,groups.create_group);
 	app.post("/save_group",autenticar,groups.save_group);
 	app.get("/test", autenticar, groups.get_group);
+    app.get("/edit_group/:id", autenticar, groups.edit_group);
+    app.post("/edit_group/:id", autenticar, groups.save_edit_group);
 };

@@ -8,9 +8,9 @@
 
 <link href="stylesheets/css/bootstrap.css" rel="stylesheet">
 
-<form id = "principalForm" action="/save_group" method="post">
-    <input type="text" name="group[name]" placeholder="Nome do grupo">
-    <input type="text" name="group[description]" placeholder="Descricao">
+<form id = "principalForm" action="/edit_group/<%- group.id %>" method="post">
+    <input type="text" name="group[name]" value="<%- group.name %>">
+    <input type="text" name="group[description]" value="<%- group.description %>">
 <button id = "saveButton">Salvar</button>
 </form>
 

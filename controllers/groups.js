@@ -52,9 +52,28 @@ module.exports = function(app) {
 		get_group: function(req, res) {
 			var _id = req.session.user._id;
 			User.findById(_id, function(erro, user) {
-				res.json(user.contacts)
+				res.json(user.contacts);
 			});
-		}
+		},
+        edit_group: function (req, res) {
+            var id = req.params.id;
+            Group.findById(id, function(error, group) {
+                console.log("edit_group: the group is " + group);
+                res.render("groups/edit_group", {group: group});
+            });
+        },
+        save_edit_group: function (req, res) {
+            var id = req.params.id;
+            var newGroup = req.body.group;
+            Group.findById(id, function(error, group) {
+                console.log("edit_group: old group is " + group);
+                group.name = newGroup.name;
+                group.description = newGroup.description;
+                group.save()
+                console.log("edit_group: new group is " + group);
+                res.redirect("/groups");
+            });
+        }
 	};
 	return GroupsController;
 };
