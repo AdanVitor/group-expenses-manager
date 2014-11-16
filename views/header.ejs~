@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+	<head>
+
+		<meta charset="utf-8">
+		<link href="stylesheets/css/bootstrap.css" rel="stylesheet">
+		<link href="stylesheets/css/bootstrap.min.css" rel="stylesheet">
+		<link href="stylesheets/style.css" rel="stylesheet">
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+		<title>Gerenciador de contas</title>
+	</head>
+	<body>
