@@ -55,6 +55,8 @@ io.use(function(socket, next) {
 	});
 });
 
+io.app = app;
+
 load("models")
 	.then("controllers")
 	.then("routes")

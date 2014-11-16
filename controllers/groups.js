@@ -1,11 +1,9 @@
 module.exports = function(app) {
 	var User = app.models.user;
 	var Group = app.models.group;
-	var counter = 0;
+	var Expense = app.models.expense;
 	var GroupsController = {
 		index: function(req, res) {
-			console.log("counter: " + counter);
-			counter++;
 			var userID = req.session.user._id; 
 			User.findById(userID, function(erro, user) {
 				var contacts =  user.contacts;
@@ -131,6 +129,15 @@ module.exports = function(app) {
 						}
 					});
 				}
+			});
+        },
+        view_group: function  (req,res) {
+        	var group_id = req.params.id;
+        	/*Searching the expenses of this group*/
+        	var query = {groupID: group_id}
+        	Expense.find(query , function (erro,expenses){
+				res.render("groups/view_group",{expenses: expenses, groupID: group_id, 
+					userID: req.session.user._id})
 			});
         }
 

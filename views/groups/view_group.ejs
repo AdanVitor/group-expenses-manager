@@ -1,0 +1,64 @@
+<% include ../header %>
+<header>
+    <h2>Informações do grupo</h2>
+</header>
+
+
+<hr>
+<div id = "overview">
+    
+</div>
+
+
+<h2>Compras feitas no grupo</h2>
+<% if (expenses.length != 0) { %>
+    <table>
+        <thead>
+            <tr>
+                <th> Descricao </th>
+                <th> Custo </th>
+                <th> Data </th>
+                <th> Comprador </th>
+            </tr>
+        </thead>
+        <tbody>
+        <% for(var i=0; i<expenses.length; i++){ %>
+            <tr>
+                <td><%- expenses[i].description%></td>
+                <td><%- expenses[i].cost%></td>
+                <td><%- expenses[i].date%></td>
+                <td><%- expenses[i].userName%></td>
+            </tr>
+        <% }%>
+        </tbody>
+    </table>
+<% } else { %>
+    <h4>Nenhuma compra</h4>
+<% } %>
+
+<h2>Inserir Nova compra </h2>
+<input type="text" id="description"  placeholder="Descricao da compra">
+<input type="text" id="cost"  placeholder="Valor">
+<button onclick="enviar();">Enviar</button>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    var socket = io("http://localhost:3000");
+    socket.emit("join", "<%- groupID %>");
+    socket.on("send-client", function (newExpense) {
+        location.reload();
+    });
+    var enviar = function() {
+        var expense = {};
+        expense.cost = document.getElementById("cost").value;
+        expense.description = document.getElementById("description").value;
+        if(expense.cost == "" ||  expense.description == ""){
+            alert("Por favor preencha ambos os campos");
+            return;
+        }
+        expense.date = new Date();
+        expense.userID = "<%- userID %>";
+        expense.groupID = "<%- groupID %>";
+        socket.emit("send-server", expense);
+    };
+</script>

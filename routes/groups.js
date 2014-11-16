@@ -10,4 +10,5 @@ module.exports = function(app) {
     app.post("/edit_group/:id", autenticar, groups.save_edit_group);
     app.get("/add_group_member/:id", autenticar, groups.add_group_member);
     app.post("/add_group_member", autenticar, groups.save_group_member);
+    app.get("/view_group/:id", autenticar, groups.view_group);
 };
