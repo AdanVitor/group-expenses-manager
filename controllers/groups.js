@@ -1,10 +1,12 @@
 module.exports = function(app) {
 	var User = app.models.user;
 	var Group = app.models.group;
+	var counter = 0;
 	var GroupsController = {
 		index: function(req, res) {
+			console.log("counter: " + counter);
+			counter++;
 			var userID = req.session.user._id; 
-			console.log(typeof userID);
 			User.findById(userID, function(erro, user) {
 				var contacts =  user.contacts;
 				var groupIDs = user.groupIDs;
