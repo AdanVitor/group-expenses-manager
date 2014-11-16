@@ -2,6 +2,7 @@ module.exports = function (app){
 	var Schema = require("mongoose").Schema;
 	var balance = Schema({
 		userID: {type:String},
+		userName: {type:String},
 		balance:{type: Number}
 	});
 	var group = Schema({

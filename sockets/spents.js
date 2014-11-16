@@ -7,6 +7,7 @@ module.exports = function(io) {
 		var crypto = require("crypto") ,sockets = io.sockets;
 		var User = io.app.models.user;
 		var Expense = io.app.models.expense;
+		var Group = io.app.models.group;
 		var expensesQueue = [];
 		var count = 0 ;
 
@@ -15,27 +16,42 @@ module.exports = function(io) {
 			var session = client.handshake.session
 			,usuario = session.usuario;
 
-			client.on("send-server", function (expenseData) {
+			client.on("send-server", function (expenseData , groupID) {
 				var user_id = expenseData.userID;
 				// finishing of to mount the expenseData object adding the name of the user
 				User.findById(user_id , function (error, user){
 					expenseData.userName = user.name;
 					Expense.create(expenseData , function (error, expense){
-						var sala = session.sala;
-						sockets.in(sala).emit("send-client", expense);
+						var socketGroup = session.socketGroup;
+						Group.findById(groupID, function (error,group){
+							var balance = group.usersBalance;
+							var newCost = parseFloat(expenseData.cost);
+							var delta = newCost/group.userIDs.length;
+							for(var x in balance){
+								if(balance[x].userID == user_id){
+									balance[x].balance += delta;
+								}
+								else{
+									balance[x].balance -= delta;
+								}
+							}
+							group.save();
+							sockets.in(socketGroup).emit("send-client", expense);
+						});
+						
 					});
 				});
 				
 			});
 
-			client.on("join", function(sala) {
-				session.sala = sala;
-				console.log("join: " + sala);
-				client.join(sala);
+			client.on("join", function(socketGroup) {
+				session.socketGroup = socketGroup;
+				console.log("join: " + socketGroup);
+				client.join(socketGroup);
 			});
 
 			client.on("disconnect", function () {
-				client.leave(session.sala);
+				client.leave(session.group);
 			});
 
 		});

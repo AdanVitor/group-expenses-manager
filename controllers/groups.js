@@ -38,11 +38,18 @@ module.exports = function(app) {
 				if(group){
 					var userIds = group.userIDs;
 					userIds.push(_id);
-					group.save();
 					/*Adding the idGroup in the user*/
 					User.findById(_id, function(erro,user){
 						var groupIDs = user.groupIDs;
 						groupIDs.push(group._id);
+
+						var newBalance = {};
+						newBalance.userID = _id;
+						newBalance.userName = user.name;
+						newBalance.balance = 0;
+						group.usersBalance.push(newBalance);
+						group.save();
+
 						user.save();
 						console.log("user");
 						console.log(user);
@@ -124,7 +131,16 @@ module.exports = function(app) {
 						if(group){
 							var userIDs = group.userIDs;
 							userIDs.push(contactID);
+							var newBalance = {};
+							newBalance.userID = contactID;
+							newBalance.userName = contact.name;
+							newBalance.balance = 0;
+							group.usersBalance.push(newBalance);
 							group.save();
+							console.log("adicionando usuario no grupo");
+							console.log(group);
+							console.log("user");
+							console.log(contact);
 							res.redirect("/groups");
 						}
 					});
@@ -133,11 +149,16 @@ module.exports = function(app) {
         },
         view_group: function  (req,res) {
         	var group_id = req.params.id;
+        	var userID = req.session.user._id;
         	/*Searching the expenses of this group*/
         	var query = {groupID: group_id}
         	Expense.find(query , function (erro,expenses){
-				res.render("groups/view_group",{expenses: expenses, groupID: group_id, 
-					userID: req.session.user._id})
+        		Group.findById(group_id , function(erro,group){
+        			User.findById(userID, function (error, user) {
+	        			res.render("groups/view_group",{expenses: expenses, groupID: group_id, 
+						userID: req.session.user._id , balance: group.usersBalance, user: user})
+        			});
+        		});
 			});
         }
 

@@ -6,7 +6,28 @@
 
 <hr>
 <div id = "overview">
-    
+    <h1>Ola <%- user.name %></h1>
+    <h2>Overview</h2>
+    <% if (balance.length != 0) { %>
+        <table>
+            <thead>
+                <tr>
+                    <th> Usuario </th>
+                    <th> Saldo </th>
+                </tr>
+            </thead>
+            <tbody>
+            <% for(var i=0; i<balance.length; i++){ %>
+                <tr>
+                    <td><%- balance[i].userName%></td>
+                    <td><%- balance[i].balance%></td>
+                </tr>
+            <% }%>
+            </tbody>
+        </table>
+    <% } else { %>
+        <h4>Nenhum usuário</h4>
+    <% } %>
 </div>
 
 
@@ -59,6 +80,9 @@
         expense.date = new Date();
         expense.userID = "<%- userID %>";
         expense.groupID = "<%- groupID %>";
-        socket.emit("send-server", expense);
+        socket.emit("send-server", expense ,"<%- groupID %>");
     };
 </script>
+
+<% include ../exit %>
+<% include ../footer %>
