@@ -12,14 +12,14 @@
 
 <section>
 	<br>
-	<span class="btn-group">
+	
     <form action="/create_group" method="get">
         <button type="submit" class="btn btn-sm btn-success">Criar Grupo</button>
     </form>
+    <br>
      <form action="/show_contact" method="get">
         <button type="submit" class="btn btn-sm btn-success">Adicionar Contato</button>
     </form>
-    </span>
 
     <br />
     <hr>

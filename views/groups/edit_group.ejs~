@@ -11,7 +11,7 @@
 <form id = "principalForm" action="/edit_group/<%- group.id %>" method="post">
     <input type="text" name="group[name]" value="<%- group.name %>">
     <input type="text" name="group[description]" value="<%- group.description %>">
-    <button id = "saveButton" class="btn btn-sm btn-success">Salvar</button>
+    <button id = "saveButton">Salvar</button>
 </form>
 
 
@@ -39,7 +39,7 @@
 <% } %>
 
 <input type="text" id="msg" placeholder="Mensagem">
-<button onclick="enviar();" class="btn btn-sm btn-success">Enviar</button>
+<button onclick="enviar();">Enviar</button>
 
 <script src="/socket.io/socket.io.js"></script>
 <script>

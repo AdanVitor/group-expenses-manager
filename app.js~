@@ -17,7 +17,7 @@ var express = require("express"),
 global.db = mongoose.connect("mongodb://localhost/SpendManager");
 app.use(express.static(__dirname + '/public'));
 
-
+<link rel='stylesheet' href='/style.css' />
 
 
 app.set("views", __dirname + "/views");

@@ -1,12 +1,12 @@
 <% include ../header %>
 <header>
-    <h1>Informações do grupo</h1>
+    <h2>Informações do grupo</h2>
 </header>
 
 
 <hr>
 <div id = "overview">
-    <h2>Olá, <%- user.name %>!</h2>
+    <h1>Ola <%- user.name %></h1>
     
     <% if (balance.length != 0) { %>
         <table class="table table-hover">
