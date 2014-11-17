@@ -1,9 +1,9 @@
-/* essa função io.sockets.on("connection") fica aguardando que 
+/* essa função io.sockets.on("connection") fica aguardando que
 o cliente envie uma mensagem para o servidor - único evento ainda send-server.
-Fluxo básico - cliente envia uma mensagem para o servidor e o servidor responde 
+Fluxo básico - cliente envia uma mensagem para o servidor e o servidor responde
 o próprio clinte, via client.emit ou a todos os clientes via client.broadcast.emit*/
 module.exports = function(io) {
-		
+
 		var crypto = require("crypto") ,sockets = io.sockets;
 		var User = io.app.models.user;
 		var Expense = io.app.models.expense;
@@ -29,7 +29,8 @@ module.exports = function(io) {
 							var delta = newCost/group.userIDs.length;
 							for(var x in balance){
 								if(balance[x].userID == user_id){
-									balance[x].balance += delta;
+									var temp = newCost - delta;
+									balance[x].balance += temp;
 								}
 								else{
 									balance[x].balance -= delta;
@@ -38,10 +39,10 @@ module.exports = function(io) {
 							group.save();
 							sockets.in(socketGroup).emit("send-client", expense);
 						});
-						
+
 					});
 				});
-				
+
 			});
 
 			client.on("join", function(socketGroup) {
