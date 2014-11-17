@@ -11,7 +11,7 @@
 <form id = "principalForm" action="/save_group" method="post">
     <input type="text" name="group[name]" placeholder="Nome do grupo">
     <input type="text" name="group[description]" placeholder="Descricao">
-<button id = "saveButton" class="btn btn-sm btn-success">Salvar</button>
+<button id = "saveButton">Salvar</button>
 </form>
 
 
